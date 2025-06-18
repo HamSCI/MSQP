@@ -2,6 +2,8 @@
 
 **Objective:** Generate research-worthy data resulting from HF and VHF meter meteor scatter operation. The data will be used by the research community to answer science questions such as:
 
+## Primary Research Questions
+*These are questions that we plan to have closure on.*
 1. What are the preferred directions for meteor scatter propagation as a function of meteor shower radiant location?
 2. What is the typical duration of useful HF and VHF meteor scatter reflections?
 3. Is there a correlation between propagation enhancement and meteoroid size or meteoroid velocity?
@@ -11,6 +13,9 @@
 7. How do we distinguish meteor scatter communications from other propagation modes?
    1. What percentage of reported meteor scatter QSOs are actually meteor scatter?
    2. What percentage are the other modes?
+  
+## Secondary Research Questions
+*These are questions we are interested in, but may not be the prime focus of the MSQP, or we may not have a clear path to closure with our available methodology.*
 
 The target communities include: Seasoned meteor scatter operators, meteor scatter 'rookies' (those who are new to the mode), researchers with an interest in radio wave propagation.  
 
