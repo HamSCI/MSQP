@@ -7,9 +7,9 @@
 1. What are the preferred directions for meteor scatter propagation as a function of meteor shower radiant location?
    1. Is there a correlation between propagation enhancement and meteoroid size or meteoroid velocity?
    2. What other factors might influence the strength of HF meteor scatter reflections?
-2. What is the minimum size of amateur radio station needed to work meteor scatter operations?
-3. What is the typical duration of useful HF and VHF meteor scatter reflections?
+2. What is the typical duration of useful HF and VHF meteor scatter reflections?
    1. How does meteor scatter duration changes with wavelenght, Tx-Rx distance, meter velocity?
+3. What is the minimum size of amateur radio station needed to work meteor scatter operations?
 4. Compare astronomical observations with amateur radio observations
 5. How do we distinguish meteor scatter communications from other propagation modes?
    1. What percentage of reported meteor scatter QSOs are actually meteor scatter?
