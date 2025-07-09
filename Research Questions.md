@@ -7,7 +7,7 @@
 1. What factors influence the strength of HF and VHF meteor scatter propagations?
    - How does it change with the meteor shower radiant location, radio frequency, meteoroid size or velocity
 2. What is the typical duration of useful HF and VHF meteor scatter propagations?
-   - How does it changes with wavelenght, Tx-Rx distance, meteor velocity?
+   - How does it change with the radio frequency, transmitter-reciver distance, meteor velocity?
 3. What is the minimum size of amateur radio station needed to work meteor scatter operations?
 4. How do we distinguish meteor scatter communications from other propagation modes?
    - What percentage of reported meteor scatter QSOs are actually meteor scatter?
