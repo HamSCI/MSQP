@@ -10,8 +10,8 @@
    - How does it changes with wavelenght, Tx-Rx distance, meteor velocity?
 3. What is the minimum size of amateur radio station needed to work meteor scatter operations?
 4. How do we distinguish meteor scatter communications from other propagation modes?
-   i. What percentage of reported meteor scatter QSOs are actually meteor scatter?
-   ii. What percentage are the other modes?
+   - What percentage of reported meteor scatter QSOs are actually meteor scatter?
+   - What percentage are the other modes?
 5. Compare astronomical observations with amateur radio observations
   
 ## Secondary Research Questions
