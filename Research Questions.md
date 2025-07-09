@@ -4,13 +4,15 @@
 
 ## Primary Research Questions
 *These are questions that we plan to have closure on.*
-1. What factors influence the strength of HF meteor scatter propagations? e.g., meteor shower radiant location, radio frequency, meteoroid size or velocity?
-2. What is the typical duration of useful HF and VHF meteor scatter propagations? How does the meteor scatter duration changes with wavelenght, Tx-Rx distance, meteor velocity?
+1. What factors influence the strength of HF and VHF meteor scatter propagations?
+   - How does it change with the meteor shower radiant location, radio frequency, meteoroid size or velocity
+2. What is the typical duration of useful HF and VHF meteor scatter propagations?
+   - How does it changes with wavelenght, Tx-Rx distance, meteor velocity?
 3. What is the minimum size of amateur radio station needed to work meteor scatter operations?
-4. Compare astronomical observations with amateur radio observations
-5. How do we distinguish meteor scatter communications from other propagation modes?
+4. How do we distinguish meteor scatter communications from other propagation modes?
    1. What percentage of reported meteor scatter QSOs are actually meteor scatter?
    2. What percentage are the other modes?
+5. Compare astronomical observations with amateur radio observations
   
 ## Secondary Research Questions
 *These are questions we are interested in, but may not be the prime focus of the MSQP, or we may not have a clear path to closure with our available methodology.*
