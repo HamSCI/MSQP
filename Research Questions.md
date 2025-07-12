@@ -1,18 +1,21 @@
 # Meteor Scatter QSO Party Research Questions and Objectives
 
-**Objective:** Generate research-worthy data resulting from HF and VHF meter meteor scatter operation. The data will be used by the research community to answer science questions such as:
+**Objective:** Generate research-worthy data resulting from HF and VHF meter meteor scatter operations. The data will be used by the research community to answer science questions such as:
 
 ## Primary Research Questions
 *These are questions that we plan to have closure on.*
-1. What factors influence the strength of HF and VHF meteor scatter propagations?
-   - How does it change with the meteor shower radiant location, radio frequency, meteoroid size or velocity
-2. What is the typical duration of useful HF and VHF meteor scatter propagations?
-   - How does it change with the radio frequency, transmitter-reciver distance, meteor velocity?
-3. What is the minimum size of amateur radio station needed to work meteor scatter operations?
-4. How do we distinguish meteor scatter communications from other propagation modes?
+1. What factors influence meteor scatter propagation?
+   - What are the similarities and differences between HF and VHF meteor scatter propagation?
+   - How does propagation change between two meteor showers?
+   - How does propagation change with radiant location, trail direction, meteoroid size, and velocity?
+2. What is the typical duration of useful meteor scatter propagation?
+   - How does this duration vary with radio frequency, transmitter–receiver distance, and meteor velocity?
+4. What is the minimum size of an amateur radio station needed to work meteor scatter operations?
+   - How does this minimum station size vary between HF and VHF bands?
+6. How can meteor scatter communication be distinguished from other propagation modes?
    - What percentage of reported meteor scatter QSOs are actually meteor scatter?
-   - What percentage are the other modes?
-5. Compare astronomical observations with amateur radio observations
+   - What percentage are due to other modes (e.g., tropospheric, F-layer, E-layer, auroral)?
+7. How do astronomical meteor observations compare with amateur radio observations?
   
 ## Secondary Research Questions
 *These are questions we are interested in, but may not be the prime focus of the MSQP, or we may not have a clear path to closure with our available methodology.*
