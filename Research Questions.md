@@ -16,11 +16,31 @@
    - What percentage of reported meteor scatter QSOs are actually meteor scatter?
    - What percentage are due to other modes (e.g., tropospheric, F-layer, E-layer, auroral)?
 7. How do astronomical meteor observations compare with amateur radio observations?
-  
+
 ## Secondary Research Questions
 *These are questions we are interested in, but may not be the prime focus of the MSQP, or we may not have a clear path to closure with our available methodology.*
 
 The target communities include: Seasoned meteor scatter operators, meteor scatter 'rookies' (those who are new to the mode), researchers with an interest in radio wave propagation.  
+
+-----
+Expressions for the power seen by the receiver $P_R$ (Watts) and echo duration are as follows,
+
+$$ P_R \space \propto \space \frac{\lambda^3}{(R_1 R_2)(R_1 + R_2)(1 - \sin^2 \phi \space \cos^2 \beta)} $$  
+
+$$ T \space \propto \space \lambda^2 \sec^2 \phi $$  
+
+**Where:** 
+$\lambda$ = radio wave wavelength,  
+$R_1$ = distance between meteor trail and transmitter,  
+$R_2$ = distance between meteor trail and receiver,  
+$\phi$ = half of the angle between the r1 and r2 lines,  
+$\beta$ = angle between meteor trail and the intersection line of the tangent plane and plane of propagation 
+
+The equations show that the farther apart the transmitter and receiver are, the more power the meteor trail reflects, and the longer the echo lasts. However, at some point, the signal loss from the large distance (the terms involving $R_1$ and $R_2$) becomes too strong and cancels out the benefit of increasing the distance and angle $\phi$. Still, for a while (depending on the transmitter power), this setup has advantage over the backscatter. Therefore, placing the transmitter and receiver several hundred kilometers apart allows us to detect fainter and higher meteors than if both were in the same location.
+
+Reference:  
+McKinley, Donald William Robert. "Meteor science and engineering." New York (1961).  
+Some Notes and Equations for Forward Scatter compiled by James Richardson https://amsmeteors.org/radio/scatter_notes.txt
 
 -----
 Since our brief discussion at the HamSCI call a couple of weeks ago I’ve been giving some thought to possible science objectives for the meteor scatter work. I’d be interested to hear how these ideas fit with your vision for the events. 
