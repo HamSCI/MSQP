@@ -6,24 +6,27 @@
 *These are questions that we plan to have closure on.*
 1. What factors influence meteor scatter propagation?
    - What are the similarities and differences between HF and VHF meteor scatter propagation?
-   - How does propagation change between two meteor showers?
-   - How does propagation change with radiant location, trail direction, meteoroid size, and velocity?
+   - How does propagation change between between the Perseid and Geminid meteor showers due to their different speeds and radiant geometries?
+   - How does propagation change between the various sporadic sources and minor showers with their different speeds and radiant geometries?
+   - How does propagation change with radiant geometries, trail direction, meteoroid size, and speed?
 2. What is the typical duration of useful meteor scatter propagation?
    - How does this duration vary with radio frequency, transmitter–receiver distance, and meteor velocity?
-4. What is the minimum size of an amateur radio station needed to work meteor scatter operations?
+3. What is the minimum size of an amateur radio station needed to work meteor scatter operations?
    - How does this minimum station size vary between HF and VHF bands?
-6. How can meteor scatter communication be distinguished from other propagation modes?
+4. How can meteor scatter communication be distinguished from other propagation modes?
    - What percentage of reported meteor scatter QSOs are actually meteor scatter?
    - What percentage are due to other modes (e.g., tropospheric, F-layer, E-layer, auroral)?
-7. How do astronomical meteor observations compare with amateur radio observations?
+5. How do optical and radar meteor observations compare with amateur radio observations?
 
 ## Secondary Research Questions
 *These are questions we are interested in, but may not be the prime focus of the MSQP, or we may not have a clear path to closure with our available methodology.*
 
-The target communities include: Seasoned meteor scatter operators, meteor scatter 'rookies' (those who are new to the mode), researchers with an interest in radio wave propagation.  
+The target communities include: Seasoned meteor scatter operators, meteor scatter 'rookies' (those who are new to the mode), researchers with an interest in radio wave propagation.
+
+In addition to PSKReporter spots the .WAV files from MSK144 decodes will be collected so that signal strength and duration can be determined.
 
 -----
-Expressions for the power seen by the receiver $P_R$ (Watts) and echo duration are as follows,
+Expressions for the power seen by the receiver $P_R$ (Watts) and echo duration $T$ (sec) are as follows,
 
 $$ P_R \space \propto \space \frac{\lambda^3}{(R_1 R_2)(R_1 + R_2)(1 - \sin^2 \phi \space \cos^2 \beta)} $$  
 
