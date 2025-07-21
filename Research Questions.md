@@ -53,7 +53,7 @@ The equations show that the farther apart the transmitter and receiver are, the 
     </td>
   </tr>
 </table>
-<p><em>Figure 1. Received power and geometry effects in bistatic meteor scatter. Top and bottom panels shows received power variations in the linear and dB scales. Left panel illustrates detection range advantages for wider transmitter-receiver separations. Right panel depicts the effect of meteor geometry w.r.t. propagation plane on the recived power.</em></p>
+<p><em>Figure 1. Received power and geometry effects in bistatic meteor scatter. Top and bottom panels shows received power variations in the linear and dB scales. Left panel illustrates detection range advantages for wider transmitter-receiver separations. Right panel depicts the effect of meteor geometry w.r.t. propagation plane on the received power.</em></p>
 <div>
 
 
