@@ -41,10 +41,43 @@ $\beta$ = angle between meteor trail and the intersection line of the tangent pl
 
 The equations show that the farther apart the transmitter and receiver are, the more power the meteor trail reflects, and the longer the echo lasts. However, at some point, the signal loss from the large distance (the terms involving $R_1$ and $R_2$) becomes too strong and cancels out the benefit of increasing the distance and angle $\phi$. Still, for a while (depending on the transmitter power), this setup has advantage over the backscatter. Therefore, placing the transmitter and receiver several hundred kilometers apart allows us to detect fainter and higher meteors than if both were in the same location.
 
+
+<div align="center">
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="fig_Pr_changes_with_angles_linear.png" width="500">
+    </td>
+    <td align="center" width="50%">
+      <img src="fig_Pr_changes_with_angles_dB.png" width="500">
+    </td>
+  </tr>
+</table>
+<p><em>Figure 1. Received power and geometry effects in bistatic meteor scatter. Top and bottom panels shows received power variations in the linear and dB scales. Left panel illustrates detection range advantages for wider transmitter-receiver separations. Right panel depicts the effect of meteor geometry w.r.t. propagation plane on the recived power.</em></p>
+<div>
+
+
+<div align="center">
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="fig_Pr_changes_with_angles_linear.png" width="500"><br>
+    </td>
+    <td align="center" width="50%">
+      <img src="fig_Pr_changes_with_angles_dB.png" width="500"><br>
+    </td>
+  </tr>
+</table>
+<p><em>Figure 2. Metoer sctatter power and decay time changes with frequency/wavelegth of radio commucation.</em></p>
+<div>
+
+<div align="left">
 Reference:  
+   
 McKinley, Donald William Robert. "Meteor science and engineering." New York (1961).  
 Some Notes and Equations for Forward Scatter compiled by James Richardson https://amsmeteors.org/radio/scatter_notes.txt
-
+<div>
+   
 -----
 Since our brief discussion at the HamSCI call a couple of weeks ago I’ve been giving some thought to possible science objectives for the meteor scatter work. I’d be interested to hear how these ideas fit with your vision for the events. 
 
