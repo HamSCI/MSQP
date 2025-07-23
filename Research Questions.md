@@ -36,7 +36,7 @@ $$ T \space \propto \space \lambda^2 \sec^2 \phi $$
 $\lambda$ = radio wave wavelength,  
 $R_1$ = distance between meteor trail and transmitter,  
 $R_2$ = distance between meteor trail and receiver,  
-$\phi$ = half of the angle between the r1 and r2 lines,  
+$\phi$ = half of the angle between the R1 and R2 lines,  
 $\beta$ = angle between meteor trail and the intersection line of the tangent plane and plane of propagation 
 
 The equations show that the farther apart the transmitter and receiver are, the more power the meteor trail reflects, and the longer the echo lasts. However, at some point, the signal loss from the large distance (the terms involving $R_1$ and $R_2$) becomes too strong and cancels out the benefit of increasing the distance and angle $\phi$. Still, for a while (depending on the transmitter power), this setup has advantage over the backscatter. Therefore, placing the transmitter and receiver several hundred kilometers apart allows us to detect fainter and higher meteors than if both were in the same location.
