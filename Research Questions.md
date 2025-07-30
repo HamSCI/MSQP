@@ -71,21 +71,4 @@ McKinley, Donald William Robert. "Meteor science and engineering." New York (196
 Some Notes and Equations for Forward Scatter compiled by James Richardson https://amsmeteors.org/radio/scatter_notes.txt
 <div>
    
------
-
-The target communities include: Seasoned meteor scatter operators, meteor scatter 'rookies' (those who are new to the mode), researchers with an interest in radio wave propagation. Encourage use of frequencies besides the calling freq to avoid local interference issues. Decoding grid squares provides good location data. 
-
-N4WLO beacons running on 6m and 10m now. Located near Mobile AL. I’ll reach out and see if he would like to participate, if he isn’t already plugged in. I regularly hear meteors on 10m on his beacon frequency. 
-
-TV station ping counts - easy for anyone with an SDR. My count software selects the underdense. I started doing this 25 years ago in the analog TV signal era and have a receiver which has been running for the last year using my count software. It still works using the digital TV pilot tone. This is easy to do with a dipole and SDR and lends itself to continuous monitoring. It also sounds cool as the signals are true pings. 
-
-In addition to PSKReporter spots the .WAV files from MSK144 decodes will be collected so that signal strength and duration can be determined. Best discriminator is length of signal - can WSJT-X provide this real-time or post-processing? WAV files are useful but analysis is potentially labor-intensive. ~ 1 second signals are likely underdense meteors. Filter for those. There can be overdense meteors that would be rejected by this filter but they don’t have to satisfy the specular condition either. But maybe we don’t care...
-
-Initial trail radius also affects the scattered signal. It is a function of meteor speed. Network of transmit and receive stations can provide the data - enable PSKReporter reporting 
-  
-Talk about specular geometry, underdense and overdense meteors 
-
-Difficult to get flux as a function of size due to the geometry and speed dependence. UWO has worked this out with backscatter radar and time-of-flight stations 
-
-Show slides giving background of meteor showers an parent bodies (mostly cometary) and sporadic source locations, their comet family sources and speeds. Basic meteor science. 
- 
+----
