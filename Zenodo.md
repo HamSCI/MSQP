@@ -20,12 +20,13 @@ This is how you upload to Zenodo.
     1. There is an option to "Save draft" on the right hand side if the file is not ready to be published
     2. <img width="381" height="585" alt="Image" src="https://github.com/user-attachments/assets/a6934efb-3d26-4d5b-a770-04dee3a3b48f" />
     3. To access a draft click on the inbox icon next to the "+" icon in the top right corner of the screen (refrence picture in step 1) and click on the "uploads" tab.
-5. Click "upload files" 
-6. Find the WAV files you uploaded and add them.
+5. Click "upload files"
+   1. <img width="839" height="416" alt="Image" src="https://github.com/user-attachments/assets/7d035966-5ee4-4224-8b41-6c4902b9ba34" />
+7. Find the WAV files you uploaded and add them.
    1. If the file ammount exceeds the maximum of 100 files, compress all files into a zip file to upload.
-7. It would be usefull to upload the wsjtx_log.adi and ALL.TXT files as well.
+8. It would be usefull to upload the wsjtx_log.adi and ALL.TXT files as well.
    1. These files can be trimmed to just the times of the MSQP.
-8. Select "no" if you do not already have a DOI, then click "generate DOI"
+9. Select "no" if you do not already have a DOI, then click "generate DOI"
    1. You will most likely have to do this!
 10. Under the "Resource type" dropdown, select "Dataset"
 11. Under the "Title" Section fill in the following information: Callsign used, six character grid square, yearmonthday(s) operated, "Meteor Scatter QSO Party"
