@@ -18,8 +18,9 @@ This is how you upload to Zenodo.
 8. Select "no" if you do not already have a DOI, then click "generate DOI"
 9. Under the "Resource type" dropdown, select Dataset
 10. Under the "Title" Section fill in the following information: Callsign used, six character grid square, yearmonthday(s) operated, "Meteor Scatter QSO Party"
-11. Set files to "public," please note that this will make your files available to everybody, and that, once published, they ***cannot*** be deleted
-   1. There is an option to "Save draft" on the right hand side if the file is not ready to be published
+    1. Example Title: W3USR FN21EJ 20250811-16 Meteor Scatter QSO Party
+12. Set files to "public," please note that this will make your files available to everybody, and that, once published, they ***cannot*** be deleted
+    1. There is an option to "Save draft" on the right hand side if the file is not ready to be published
 11. In the "Description" Box use the following template:
     - Callsign Used (or PSKReporter Identifier):
     *  Operator Names and Calls:
