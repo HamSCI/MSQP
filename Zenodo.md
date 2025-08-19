@@ -13,7 +13,7 @@ This is how you upload to Zenodo.
 1. Log in and click the "+" icon in the top right corner of the screen.
    1. <img width="341" height="145" alt="Image" src="https://github.com/user-attachments/assets/2666e386-987e-4653-b210-e4a45ba2a279" />
 3. Click "New upload"
-4. Click "Select a Community" and type and select "Ham Radio Science Citizen Investigation"
+4. Once in new upload, click "Select a Community" then, type and select "Ham Radio Science Citizen Investigation"
    1. <img width="711" height="163" alt="Image" src="https://github.com/user-attachments/assets/2ad4cb3a-5420-4459-89cf-6fb3cd159189" />
    2. <img width="835" height="137" alt="Image" src="https://github.com/user-attachments/assets/4ccdef7c-e495-42d3-afb0-aba4bce0a734" />
 5. Click "upload files" 
