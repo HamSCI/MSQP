@@ -11,16 +11,22 @@ This is how you generate a WAV file in WSJT-X.
 
 This is how you upload to Zenodo.
 1. Log in and click the "+" icon in the top right corner of the screen
-2. Click "New upload"
-3. Click "upload files" 
-4. Find the WAV files you uploaded and add them
+   1. <img width="341" height="145" alt="Image" src="https://github.com/user-attachments/assets/2666e386-987e-4653-b210-e4a45ba2a279" />
+3. Click "New upload"
+4. Click "Select a Community" and type and select "Ham Radio Science Citizen Investigation"
+   1. <img width="711" height="163" alt="Image" src="https://github.com/user-attachments/assets/2ad4cb3a-5420-4459-89cf-6fb3cd159189" />
+   2. <img width="835" height="137" alt="Image" src="https://github.com/user-attachments/assets/4ccdef7c-e495-42d3-afb0-aba4bce0a734" />
+5. Click "upload files" 
+6. Find the WAV files you uploaded and add them
    1. If the file ammount exceeds the maximum of 100 files, compress all files into a zip file to upload.
 8. Select "no" if you do not already have a DOI, then click "generate DOI"
-9. Under the "Resource type" dropdown, select Dataset
-10. Under the "Title" Section fill in the following information: Callsign used, six character grid square, yearmonthday(s) operated, "Meteor Scatter QSO Party"
+   1. You will most likely have to do this!
+10. Under the "Resource type" dropdown, select Dataset
+11. Under the "Title" Section fill in the following information: Callsign used, six character grid square, yearmonthday(s) operated, "Meteor Scatter QSO Party"
     1. Example Title: W3USR FN21EJ 20250811-16 Meteor Scatter QSO Party
 12. Set files to "public," please note that this will make your files available to everybody, and that, once published, they ***cannot*** be deleted
     1. There is an option to "Save draft" on the right hand side if the file is not ready to be published
+    2. <img width="381" height="585" alt="Image" src="https://github.com/user-attachments/assets/a6934efb-3d26-4d5b-a770-04dee3a3b48f" />
 11. In the "Description" Box use the following template:
     - Callsign Used (or PSKReporter Identifier):
     *  Operator Names and Calls:
