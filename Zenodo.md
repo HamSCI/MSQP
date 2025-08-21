@@ -1,12 +1,34 @@
-# Create WAV Files
+# How to Access WAV Files
 
-This is how you generate a WAV file in WSJT-X.
+This is how you access a WAV file in WSJT-X.
 1. Click the file pulldown menu
-2. Click "Open Log Directory"
-3. Click the subdirectory "save"
-4. Click "save decoded"
-5. Save to your device wherever you would like
+   1. <img width="707" height="54" alt="Image" src="https://github.com/user-attachments/assets/51713fc7-3ff2-457f-b31f-7aa04a028a8b" />
+3. Click "Open Log Directory"
+4. Click the folder "Save"
+  1. All saved WAV files from the device are stored in this folder
 
+# How to ZIP the WAV files 
+
+This is how you ZIP all WAV files
+1. Locate the "Save" folder containing the files you want to zip.
+2. Press Ctrl + A to select all files within the folder.
+3. Right click on any of the selected files, hover over "Send to", and then choose "Compressed (zipped) folder".
+4. Rename (optional)
+   1. Windows will create a new zip file in the same location, named after one of the original files. You can rename it as needed, ensuring the .zip extension remains. 
+
+# Create a Zenodo Account
+This is background on Zenodo and how to create an account
+1. Zenodo exists to provide a free, open, and general-purpose online repository for researchers to share, preserve, and cite all kinds of digital research outputs, including data sets, software, and publications.
+   1. Zenodo accepts all file formats
+   2. Every upload to Zenodo receives a Digital Object Identifier (DOI), making the WAV files easily citeable and discoverable for others interested in meteor scatter research.
+   3. You can create a community within Zenodo to organize meteor scatter recordings from various participants, fostering collaboration and sharing within the community.
+3. The first step is to create an account, as you will not be able to make uploads without one.
+4. There are several ways to create an account or sign in to Zenodo.
+   1. <img width="1440" height="777" alt="Image" src="https://github.com/user-attachments/assets/7dc9426b-740d-4029-8e0f-ad0e111bd4ec" />
+5. A suggestion is to create an Orcid account and use that to sign in.
+   1. ORCID is a free, unique, persistent identifier (PID) for individuals to use as they engage in research, scholarship, and innovation activities.
+6. Once you are signed in to Zenodo, you may begin making uploads.
+ 
 # Upload to Zenodo
 
 This is how you upload to Zenodo.
@@ -22,7 +44,7 @@ This is how you upload to Zenodo.
     3. To access a draft click on the inbox icon next to the "+" icon in the top right corner of the screen (refrence picture in step 1) and click on the "uploads" tab.
 5. Click "upload files"
    1. <img width="839" height="416" alt="Image" src="https://github.com/user-attachments/assets/7d035966-5ee4-4224-8b41-6c4902b9ba34" />
-7. Find the WAV files you uploaded and add them.
+7. Find the ZIP files you created and add them to the upload area.
    1. If the file ammount exceeds the maximum of 100 files, compress all files into a zip file to upload.
 8. It would be usefull to upload the wsjtx_log.adi and ALL.TXT files as well.
    1. These files can be trimmed to just the times of the MSQP.
