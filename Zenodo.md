@@ -10,6 +10,7 @@ This is how you access a WAV file in WSJT-X.
 # How to ZIP the WAV files 
 
 This is how you ZIP all WAV files
+1. The WAV file ammount will exceed the maximum of 100 files allowed by Zenodo, so this is a necessary step.
 1. Locate the "Save" folder containing the files you want to zip.
 2. Press Ctrl + A to select all files within the folder.
 3. Right click on any of the selected files, hover over "Send to", and then choose "Compressed (zipped) folder".
@@ -45,7 +46,6 @@ This is how you upload to Zenodo.
 5. Click "upload files"
    1. <img width="839" height="416" alt="Image" src="https://github.com/user-attachments/assets/7d035966-5ee4-4224-8b41-6c4902b9ba34" />
 7. Find the ZIP files you created and add them to the upload area.
-   1. If the file ammount exceeds the maximum of 100 files, compress all files into a zip file to upload.
 8. It would be usefull to upload the wsjtx_log.adi and ALL.TXT files as well.
    1. These files can be trimmed to just the times of the MSQP.
 9. Select "no" if you do not already have a DOI, then click "generate DOI"
