@@ -24,11 +24,16 @@ This is background on Zenodo and how to create an account
    2. Every upload to Zenodo receives a Digital Object Identifier (DOI), making the WAV files easily citeable and discoverable for others interested in meteor scatter research.
    3. You can create a community within Zenodo to organize meteor scatter recordings from various participants, fostering collaboration and sharing within the community.
 3. The first step is to create an account, as you will not be able to make uploads without one.
-4. There are several ways to create an account or sign in to Zenodo.
+4. To get started, click the "sign up" button
+   1. <img width="1382" height="78" alt="Image" src="https://github.com/user-attachments/assets/befd1c0a-f396-4264-9d58-2d3421fb467e" />
+   2. If the computer is in full screen the image above will be displayed. If it is not in full screen, in its place will be three horizontal lines. Click these lines and the sign up button will be available
+6. There are several ways to create an account or sign in to Zenodo.
    1. <img width="1440" height="777" alt="Image" src="https://github.com/user-attachments/assets/7dc9426b-740d-4029-8e0f-ad0e111bd4ec" />
-5. A suggestion is to create an Orcid account and use that to sign in.
+7. If signing up using Orchid, Github, or OpenAIRE, you can use any email address and a password created using personal discretion
+   1. If signing up using the Zenodo website you will be asked to "Please use an institutional email address" and a password created using personal discretion
+9. A suggestion is to create an Orcid account and use that to sign in.
    1. ORCID is a free, unique, persistent identifier (PID) for individuals to use as they engage in research, scholarship, and innovation activities.
-6. Once you are signed in to Zenodo, you may begin making uploads.
+10. Once you are signed in to Zenodo, you may begin making uploads.
  
 # Upload to Zenodo
 
@@ -40,8 +45,8 @@ This is how you upload to Zenodo.
    1. <img width="711" height="163" alt="Image" src="https://github.com/user-attachments/assets/2ad4cb3a-5420-4459-89cf-6fb3cd159189" />
    2. <img width="835" height="137" alt="Image" src="https://github.com/user-attachments/assets/4ccdef7c-e495-42d3-afb0-aba4bce0a734" />
 4. Set files to "public," please note that this will make your files available to everybody, and that, once published, they ***cannot*** be deleted
-    1. There is an option to "Save draft" on the right hand side if the file is not ready to be published
-    2. <img width="381" height="585" alt="Image" src="https://github.com/user-attachments/assets/a6934efb-3d26-4d5b-a770-04dee3a3b48f" />
+    1. There is an option to "Save draft" above "preview" if the file is not ready to be published
+    2. <img width="789" height="596" alt="Image" src="https://github.com/user-attachments/assets/38fdc202-9cf3-477c-9173-5d4f79442a75" />
     3. To access a draft click on the inbox icon next to the "+" icon in the top right corner of the screen (refrence picture in step 1) and click on the "uploads" tab.
 5. Click "upload files"
    1. <img width="839" height="416" alt="Image" src="https://github.com/user-attachments/assets/7d035966-5ee4-4224-8b41-6c4902b9ba34" />
@@ -70,5 +75,8 @@ This is how you upload to Zenodo.
     1. <img width="843" height="89" alt="Image" src="https://github.com/user-attachments/assets/7a1c9209-822d-4e19-b939-e7ce0d167130" />
     2. This is the license under which your data is being shared.
     3. Please also review the license by selecting "read more"
-16. Any Section listed after "Licenses" is deemed as less pressing and can be filled out using personal discretion. 
-17. When finished, click "publish" ***WARNING:*** **your data cannot be changed or deleted after being published!** 
+16. Any Section listed after "Licenses" is deemed as less pressing and can be filled out using personal discretion.
+18. When finished, click "submit for review"
+    1. <img width="789" height="596" alt="Image" src="https://github.com/user-attachments/assets/38fdc202-9cf3-477c-9173-5d4f79442a75" />
+    2. Once the submission is reviewed by an admin, it will either be "accepted and published" or you will be asked to enter more information (if any is missing)
+19. ***WARNING:*** **your data cannot be changed or deleted after being published!**
