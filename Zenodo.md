@@ -70,7 +70,8 @@ This is how you upload to Zenodo.
     -   Transmitter Output Power (enter 'NA' for Receive Only stations):
     *   Antenna(s) used, please describe:
     +   Bands Operated:
-    -   Additional Comments:
+    -   Receiver AGC:  Was it On, Off, or Unknown:
+    +   Additional Comments:
 15. Please keep the default "Creative Commons Attribution 4.0 International" license.
     1. <img width="843" height="89" alt="Image" src="https://github.com/user-attachments/assets/7a1c9209-822d-4e19-b939-e7ce0d167130" />
     2. This is the license under which your data is being shared.
