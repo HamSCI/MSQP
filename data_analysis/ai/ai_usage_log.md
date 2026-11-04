@@ -68,4 +68,4 @@ The first two entries are carried over from the AI usage log of `HamSCI/msqp.ham
   - A check of the 2 m underdense echoes in the Perseids data found no clipping: the loudest echo peaked 3.5 dB below full scale, and plateau and τ do not depend on echo SNR.
   - After the move, the scripts were run from their new folders: `plot_tau_by_band.py` and `coincident_echoes.py` on a copy of `echoes.csv`, and imports of `station_map.py` and the `rt_meteor_counter` package.
   - No data, results, recordings or plots are committed; `.gitignore` excludes them.
-- **Git Hash**: [fill in after committing]
+- **Git Hash**: f008193
