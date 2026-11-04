@@ -1,0 +1,18 @@
+# Data lives on Zenodo or on the analyst's own disk, never in git
+data/
+results/
+*.wav
+*.png
+*.zip
+
+# rt_meteor_counter test outputs (tools/make_test_signal.py, tools/check_detections.py)
+*_truth.csv
+test_out/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Claude Code personal overrides
+CLAUDE.local.md
+.claude/settings.local.json

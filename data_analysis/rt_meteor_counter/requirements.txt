@@ -1,0 +1,9 @@
+# radioconda provides all of these except sounddevice:
+#   mamba install -c conda-forge python-sounddevice
+numpy
+scipy
+matplotlib
+pyqt5
+pyqtgraph
+sounddevice
+soapysdr
