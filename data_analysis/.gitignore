@@ -2,6 +2,8 @@
 data/
 results/
 *.wav
+*.mp3
+*.flac
 *.png
 *.zip
 

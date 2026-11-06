@@ -69,3 +69,22 @@ The first two entries are carried over from the AI usage log of `HamSCI/msqp.ham
   - After the move, the scripts were run from their new folders: `plot_tau_by_band.py` and `coincident_echoes.py` on a copy of `echoes.csv`, and imports of `station_map.py` and the `rt_meteor_counter` package.
   - No data, results, recordings or plots are committed; `.gitignore` excludes them.
 - **Git Hash**: f008193
+
+## [2026-11-06 14:19 CST]
+- **Tool**: Claude (Anthropic), claude-opus-5-5
+- **Session Purpose**: Rob Suggs (NN4NT) asked for `rt_meteor_counter` to be run on an 8-hour recording from the NASA MSFC club station (Icom R-8500, turnstile antenna, channel 3, the PC planned for deployment), recorded from about 22:00 CDT on 10 Aug 2026 before the Perseid peak. The run also checked that the code still worked after the move into `HamSCI/MSQP`. He also asked for advice on thresholds for the quieter site and better receiver.
+- **Sections/Files Affected**:
+  - `rt_meteor_counter/rt_meteor_counter/config.py`: MIN_R2 lowered from 0.4 to 0.3, with a comment giving the reason and the data used.
+  - `rt_meteor_counter/README.md`: the underdense test list now says R² ≥ 0.3.
+  - `.gitignore`: adds `*.mp3` and `*.flac`.
+- **Nature of Contribution**: Data analysis, a configuration change and documentation edits.
+- **Human Review Status**: Partially reviewed. Rob listened to and looked at the plots of rejected clips with R² 0.25–0.4 and judged them to be real meteors. He chose MIN_R2 = 0.3 and the 2 s duration cutoff. The analysis scripts were run in a scratch folder and are not committed.
+- **Verification**:
+  - The recording is an MP3. libsndfile stopped decoding it at 2 h 35 min because of a bad length header; `lame` decoded all 8.000 h, which were then resampled to 8 kHz.
+  - At the defaults, 1,913 underdense meteors were counted, and only 4 fell off the station frequencies in 8 h, which bounds the noise false alarms.
+  - Every frequency group, including those beside the strong carrier, showed random (Poisson) arrival times and the same rise toward dawn.
+  - Thresholds of 8 and 7 dB added only about 2% more meteors for 10–20 times as many candidates to check, so the 10 dB threshold was kept.
+  - The 648 "not exponential" rejects with R² from 0 to 0.4 were all on station frequencies.
+  - Rerun with MIN_R2 = 0.3: 2,134 meteors (15-minute counts from 43 to 95, mean 67), still with only 4 off the station frequencies.
+  - The recording is lossy (MP3), so faint-echo results may differ slightly from direct sound-card input.
+- **Git Hash**: [fill in after committing]

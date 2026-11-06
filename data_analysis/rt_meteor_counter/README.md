@@ -49,7 +49,7 @@ around 1000 Hz.
 5. **Underdense test.** An echo counts as an underdense meteor if it:
    - lasts under 2 s
    - rises within 0.2 s
-   - fits the model with R² ≥ 0.4
+   - fits the model with R² ≥ 0.3
    - has an integrated SNR of at least 0.8 s
 
    **Integrated SNR** is the echo's power above the noise, in units of the noise power,

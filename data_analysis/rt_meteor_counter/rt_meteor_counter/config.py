@@ -40,10 +40,12 @@ NOISE_BEFORE_S = (1.5, 0.3)  # noise is measured from 1.5 s to 0.3 s before onse
 MAX_DURATION_S = 2.0  # underdense: shorter than this above EDGE_DB
 MAX_RISE_S = 0.20     # sharp rise: onset to peak within this
 FIT_TAIL_S = 0.30     # noise-floor time included after the echo in the fit
-MIN_R2 = 0.4          # minimum goodness of fit, in dB, over the echo and 0.3 s after
+MIN_R2 = 0.3          # minimum goodness of fit, in dB, over the echo and 0.3 s after
 MIN_INTEGRATED_SNR_S = 0.8  # echo energy / noise power, summed over the echo (s)
-# The last two were set on synthetic data: they keep about 3/4 of echoes above
-# 10 dB envelope SNR while letting through about 6 noise flickers per hour.
+# Both were first set on synthetic data. MIN_R2 was lowered from 0.4 to 0.3
+# after 8 h of MSFC channel 3 audio (Aug 2026): echoes with R2 0.3-0.4 sounded
+# and looked like meteors (rippled decays, head-echo Doppler, very short
+# echoes), and none fell off the station frequencies, where noise would land.
 TAU_RANGE_S = (0.005, 3.0)
 MAX_PLATEAU_S = 0.15  # longest level stretch before the decay
 
