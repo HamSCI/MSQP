@@ -87,4 +87,4 @@ The first two entries are carried over from the AI usage log of `HamSCI/msqp.ham
   - The 648 "not exponential" rejects with R² from 0 to 0.4 were all on station frequencies.
   - Rerun with MIN_R2 = 0.3: 2,134 meteors (15-minute counts from 43 to 95, mean 67), still with only 4 off the station frequencies.
   - The recording is lossy (MP3), so faint-echo results may differ slightly from direct sound-card input.
-- **Git Hash**: [fill in after committing]
+- **Git Hash**: e8ef218
