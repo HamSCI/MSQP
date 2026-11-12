@@ -16,6 +16,7 @@ from .dsp import Interpolator
 PREFILL_S = 0.2   # buffered audio before playback starts (absorbs block jitter)
 MAX_LAG_S = 0.6   # drop old audio beyond this, so playback never falls far behind
 TARGET_RMS = 0.1
+BEEP_DELAY_S = 0.5   # the beep follows the meteor's own sound, so the echo is heard first
 
 
 class AudioPlayer:
@@ -67,12 +68,17 @@ class AudioPlayer:
                 self.buffered -= len(self.chunks.popleft())
 
     def beep(self, hz, duration_s=0.12):
-        """Sound a short tone at the meteor's own audio frequency."""
+        """Sound a short tone at the meteor's own audio frequency, BEEP_DELAY_S from now."""
         if not self.beep_on:
             return
         n = int(duration_s * AUDIO_RATE)
         tone = np.sin(2 * np.pi * hz * np.arange(n) / AUDIO_RATE) * np.hanning(n)
-        self.beep_left = (tone * self.beep_volume).astype(np.float32)
+        start = int(BEEP_DELAY_S * AUDIO_RATE)
+        # mixed into the outgoing audio sample by sample; overlapping beeps add
+        left = np.zeros(max(len(self.beep_left), start + n), np.float32)
+        left[:len(self.beep_left)] = self.beep_left
+        left[start:start + n] += (tone * self.beep_volume).astype(np.float32)
+        self.beep_left = left
 
     def _callback(self, outdata, frames, time_info, status):
         out = outdata[:, 0]

@@ -1,22 +1,30 @@
-"""The window: input, channel and audio choices; waterfall; daily meteor counts."""
+"""The window: input, signal and audio choices; waterfall; meteor counts over the last 24 hours.
+
+The settings in the window are saved when it closes and restored at the next start
+(QSettings: the registry on Windows, a config file elsewhere).
+"""
 
 import os
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 os.environ.setdefault("PYQTGRAPH_QT_LIB", "PyQt5")
 import numpy as np
 import pyqtgraph as pg
-from pyqtgraph.Qt import QtCore, QtWidgets
+from PyQt5 import QtSvg
+from pyqtgraph.Qt import QtCore, QtGui, QtWidgets
 
 from .config import AUDIO_OFFSET_HZ, F_HI, F_LO, PILOT_MHZ, THRESHOLD_DB
 from .detector import MeteorDetector
 from .engine import Pipeline
-from .output import BINS_PER_DAY, MeteorLog
+from .output import BINS_PER_DAY, MeteorLog, signal_label
 from .sources import SdrSource, SoundcardSource, WavSource, list_audio_devices, list_sdrs
 
 N_ROWS = 600          # waterfall height in rows
 MARK_COLOR = "#00e5ff"
+LOGO = Path(__file__).with_name("hamsci_logo.svg")   # white wordmark from the hamsci.org banner
+LOGO_BG = "#212529"   # the banner's dark background, so the white logo shows
+OTHER = "other"       # signal combo entry for a frequency typed in
 
 pg.setConfigOptions(imageAxisOrder="row-major", antialias=True)
 
@@ -46,6 +54,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.house = QtCore.QTimer(self, interval=5000, timeout=self._housekeeping)
         self.house.start()
         self._refresh_devices()
+        self._restore_settings()
 
     # ------------------------------------------------------------ layout
 
@@ -67,7 +76,19 @@ class MainWindow(QtWidgets.QMainWindow):
         for ch, mhz in PILOT_MHZ.items():
             dial = mhz - AUDIO_OFFSET_HZ / 1e6
             self.channel_combo.addItem(f"Ch {ch}: pilot {mhz:.6f}, dial {dial:.6f} MHz USB", ch)
-        f.addRow("TV channel", self.channel_combo)
+        self.channel_combo.addItem("Other frequency (below)", OTHER)
+        f.addRow("Signal", self.channel_combo)
+        self.freq_mhz = QtWidgets.QDoubleSpinBox(minimum=1, maximum=2000, decimals=6,
+                                                 value=50.260, suffix=" MHz")
+        self.freq_mhz.setToolTip("The carrier to watch, e.g. a beacon or a CW meteor radar. "
+                                 "Tune the receiver 1 kHz below it in USB, so it lands near "
+                                 "1000 Hz in the audio; an SDR is tuned that way automatically.")
+        self.dial_label = QtWidgets.QLabel()
+        self.freq_mhz.valueChanged.connect(self._signal_changed)
+        self.channel_combo.currentIndexChanged.connect(self._signal_changed)
+        f.addRow("Frequency", self.freq_mhz)
+        f.addRow("", self.dial_label)
+        self._signal_changed()
         self.gain = QtWidgets.QDoubleSpinBox(minimum=0, maximum=60, value=30, suffix=" dB")
         f.addRow("SDR gain", self.gain)
         self.ppm = QtWidgets.QDoubleSpinBox(minimum=-100, maximum=100, decimals=1, suffix=" ppm")
@@ -121,13 +142,55 @@ class MainWindow(QtWidgets.QMainWindow):
         self.today_label = QtWidgets.QLabel("-")
         self.last_label = QtWidgets.QLabel("-")
         self.last_label.setWordWrap(True)
+        self.day_label = QtWidgets.QLabel("-")
+        self.local_time = QtWidgets.QCheckBox("Count plot in local time")
+        self.local_time.setToolTip("Label the count plot's hours in this PC's time zone "
+                                   "instead of UTC. The files are always in UTC.")
+        self.local_time.toggled.connect(self._update_counts)
         f.addRow("Today (UTC)", self.today_label)
+        f.addRow("Last 24 hours", self.day_label)
         f.addRow("Last", self.last_label)
+        f.addRow(self.local_time)
         v.addWidget(g)
         v.addStretch(1)
-        self.run_widgets = [self.input_combo, refresh, self.channel_combo, self.gain, self.ppm,
-                            self.output_combo, self.log_rejects, self.out_edit, browse]
+        v.addWidget(self._logo())
+        self.run_widgets = [self.input_combo, refresh, self.channel_combo, self.freq_mhz,
+                            self.gain, self.ppm, self.output_combo, self.log_rejects,
+                            self.out_edit, browse]
         return box
+
+    def _logo(self):
+        label = QtWidgets.QLabel()
+        label.setAlignment(QtCore.Qt.AlignCenter)
+        label.setStyleSheet(f"background: {LOGO_BG}; border-radius: 6px; padding: 12px;")
+        label.setToolTip("HamSCI, the Ham Radio Science Citizen Investigation: hamsci.org")
+        renderer = QtSvg.QSvgRenderer(str(LOGO))
+        if renderer.isValid():
+            ratio = self.devicePixelRatioF()
+            size = renderer.defaultSize().scaled(220, 1000, QtCore.Qt.KeepAspectRatio)
+            img = QtGui.QImage(size * ratio, QtGui.QImage.Format_ARGB32_Premultiplied)
+            img.fill(QtCore.Qt.transparent)
+            painter = QtGui.QPainter(img)
+            renderer.render(painter)
+            painter.end()
+            pix = QtGui.QPixmap.fromImage(img)
+            pix.setDevicePixelRatio(ratio)
+            label.setPixmap(pix)
+        else:
+            label.setText('<span style="color:white; font-size:20pt; font-weight:bold">'
+                          'HamSCI</span>')
+        return label
+
+    def _signal(self):
+        """(TV channel or None, dial frequency in Hz) for the chosen signal."""
+        ch = self.channel_combo.currentData()
+        mhz = self.freq_mhz.value() if ch == OTHER else PILOT_MHZ[ch]
+        return (None if ch == OTHER else ch), mhz * 1e6 - AUDIO_OFFSET_HZ
+
+    def _signal_changed(self):
+        """The frequency box is used only for 'Other frequency'."""
+        self.freq_mhz.setEnabled(self.channel_combo.currentData() == OTHER and not self.pipeline)
+        self.dial_label.setText(f"Receiver dial: {self._signal()[1] / 1e6:.6f} MHz USB")
 
     def _waterfall(self):
         self.wf_plot = pg.PlotWidget()
@@ -162,10 +225,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def _counts_plot(self):
         self.counts_plot = pg.PlotWidget()
-        self.counts_plot.setLabel("bottom", "UTC hour")
         self.counts_plot.setLabel("left", "Meteors / 15 min")
-        self.counts_plot.setXRange(0, 24, padding=0)
-        self.counts_plot.getAxis("bottom").setTicks([[(h, str(h)) for h in range(0, 25, 2)]])
+        self.counts_plot.setXRange(0, 24, padding=0)   # hours since the oldest bin shown
         self.counts_plot.setMouseEnabled(x=False, y=False)
         self.bars = pg.BarGraphItem(x0=np.arange(BINS_PER_DAY) / 4, width=0.25 * 0.85,
                                     height=np.zeros(BINS_PER_DAY), brush="#2a78d6", pen=None)
@@ -210,9 +271,9 @@ class MainWindow(QtWidgets.QMainWindow):
             self._start()
 
     def _start(self):
+        self._save_settings()
         kind, data = self.input_combo.currentData()
-        ch = self.channel_combo.currentData()
-        dial = PILOT_MHZ[ch] * 1e6 - AUDIO_OFFSET_HZ
+        ch, dial = self._signal()
         if kind == "sdr":
             source = SdrSource(data, dial, self.gain.value(), self.ppm.value())
         elif kind == "sound":
@@ -239,7 +300,7 @@ class MainWindow(QtWidgets.QMainWindow):
         for w in self.run_widgets:
             w.setEnabled(False)
         self.start_btn.setText("Stop")
-        self.status.showMessage(f"Running: {source.description}, channel {ch}. "
+        self.status.showMessage(f"Running: {source.description}, {signal_label(ch, dial)}. "
                                 f"Detection starts after a 15 s warm-up.")
         self._update_counts()
 
@@ -251,6 +312,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.log.close()   # saves today's count plot
         for w in self.run_widgets:
             w.setEnabled(True)
+        self._signal_changed()
         self.start_btn.setText("Start")
         self.status.showMessage(message)
 
@@ -265,8 +327,57 @@ class MainWindow(QtWidgets.QMainWindow):
             self.detector.threshold_db = self.threshold.value()
 
     def closeEvent(self, event):
+        self._save_settings()
         self._stop()
         event.accept()
+
+    # ------------------------------------------------------------ settings
+
+    def _settings(self):
+        return QtCore.QSettings("HamSCI", "RT Meteor Counter")
+
+    def _save_settings(self):
+        s = self._settings()
+        s.setValue("geometry", self.saveGeometry())
+        # devices by name: their index numbers change when devices come and go
+        s.setValue("input", self.input_combo.currentText())
+        s.setValue("output", self.output_combo.currentText())
+        s.setValue("signal", str(self.channel_combo.currentData()))
+        s.setValue("freq_mhz", self.freq_mhz.value())
+        for key, w in self._numeric_widgets().items():
+            s.setValue(key, w.value())
+        for key, w in self._check_widgets().items():
+            s.setValue(key, w.isChecked())
+        s.setValue("out_dir", self.out_edit.text())
+
+    def _restore_settings(self):
+        s = self._settings()
+        if s.value("geometry") is not None:
+            self.restoreGeometry(s.value("geometry"))
+        for combo, key in ((self.input_combo, "input"), (self.output_combo, "output")):
+            i = combo.findText(s.value(key, "", type=str))
+            if i >= 0:
+                combo.setCurrentIndex(i)
+        sig = s.value("signal", "", type=str)
+        for i in range(self.channel_combo.count()):
+            if str(self.channel_combo.itemData(i)) == sig:
+                self.channel_combo.setCurrentIndex(i)
+        self.freq_mhz.setValue(s.value("freq_mhz", self.freq_mhz.value(), type=float))
+        for key, w in self._numeric_widgets().items():
+            kind = float if isinstance(w, QtWidgets.QDoubleSpinBox) else int
+            w.setValue(s.value(key, w.value(), type=kind))
+        for key, w in self._check_widgets().items():
+            w.setChecked(s.value(key, w.isChecked(), type=bool))
+        self.out_edit.setText(s.value("out_dir", self.out_edit.text(), type=str))
+
+    def _numeric_widgets(self):
+        return {"gain": self.gain, "ppm": self.ppm, "volume": self.volume,
+                "beep_volume": self.beep_volume, "threshold": self.threshold,
+                "speed": self.speed, "sensitivity": self.sens, "contrast": self.contrast}
+
+    def _check_widgets(self):
+        return {"beep": self.beep, "log_rejects": self.log_rejects,
+                "local_time": self.local_time}
 
     # ------------------------------------------------------------ waterfall
 
@@ -361,11 +472,25 @@ class MainWindow(QtWidgets.QMainWindow):
     def _update_counts(self):
         if not self.log:
             return
-        today = datetime.now(timezone.utc).date()
-        counts = self.log.day_counts(today)
+        now = datetime.now(timezone.utc)
+        counts, start = self.log.last_24h(now)
         self.bars.setOpts(height=counts)
-        self.counts_plot.setTitle(f"Underdense meteors per 15 minutes, {today:%Y-%m-%d} UTC")
-        self.today_label.setText(str(int(counts.sum())))
+        # ticks every 2 hours of the displayed clock; the right edge is now
+        local = self.local_time.isChecked()
+        ticks = []
+        h = start.replace(minute=0, second=0, microsecond=0)
+        if h < start:
+            h += timedelta(hours=1)
+        while h <= start + timedelta(hours=24):
+            shown = h.astimezone() if local else h
+            if shown.hour % 2 == 0:
+                ticks.append(((h - start).total_seconds() / 3600, f"{shown:%H}"))
+            h += timedelta(hours=1)
+        self.counts_plot.getAxis("bottom").setTicks([ticks])
+        self.counts_plot.setLabel("bottom", "Local time (hour)" if local else "UTC hour")
+        self.counts_plot.setTitle("Underdense meteors per 15 minutes, last 24 hours")
+        self.today_label.setText(str(int(self.log.day_counts(now.date()).sum())))
+        self.day_label.setText(str(int(counts.sum())))
 
     def _housekeeping(self):
         if self.log:

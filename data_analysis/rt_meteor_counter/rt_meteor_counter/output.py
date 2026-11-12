@@ -21,7 +21,7 @@ from pathlib import Path
 import numpy as np
 from scipy.io import wavfile
 
-from .config import AUDIO_RATE, PILOT_MHZ
+from .config import AUDIO_OFFSET_HZ, AUDIO_RATE
 
 FIELDS = ["utc", "audio_hz", "peak_snr_db", "tau_ms", "rf_mhz", "channel", "peak_dbfs",
           "noise_dbfs", "bin_snr_db", "plateau_ms", "rise_ms", "duration_s", "fit_r2",
@@ -39,15 +39,28 @@ def _fmt(v, nd):
     return "" if v != v else f"{v:.{nd}f}"   # blank for NaN
 
 
+def signal_label(channel, dial_hz):
+    """'TV channel 3 (60.309 MHz)', or '50.260 MHz' for a frequency typed in (channel None)."""
+    mhz = (dial_hz + AUDIO_OFFSET_HZ) / 1e6
+    return f"TV channel {channel} ({mhz:.3f} MHz)" if channel else f"{mhz:.6f} MHz"
+
+
 class MeteorLog:
-    def __init__(self, out_dir, channel, dial_hz, log_rejects=True):
+    """channel is the TV channel number, or None when the receiver is tuned to a
+    frequency typed in by the user; the CSV 'channel' column is then left blank.
+    live=False is for processing a recording: today's date on the PC clock is then
+    unrelated to the data, so no (empty) counts file is made for it."""
+
+    def __init__(self, out_dir, channel, dial_hz, log_rejects=True, live=True):
         self.dir = Path(out_dir)
         self.dir.mkdir(parents=True, exist_ok=True)
         self.channel, self.dial_hz, self.log_rejects = channel, dial_hz, log_rejects
         self.counts = {}
         self.saved = set()
-        today = datetime.now(timezone.utc).date()
-        self.counts[today] = self._reload(today)
+        self._prev_day = self._prev = None   # yesterday's counts, for last_24h
+        if live:
+            today = datetime.now(timezone.utc).date()
+            self.counts[today] = self._reload(today)
 
     def _reload(self, day):
         counts = np.zeros(BINS_PER_DAY, int)
@@ -64,6 +77,26 @@ class MeteorLog:
             self.counts[day] = self._reload(day)
         return self.counts[day]
 
+    def last_24h(self, now=None):
+        """Counts in the 96 fifteen-minute bins ending with the current one, oldest
+        first, and the UTC start of the oldest bin. Yesterday's counts are read
+        from its meteors file, so they survive a restart."""
+        now = now or datetime.now(timezone.utc)
+        today = now.date()
+        b = (now.hour * 60 + now.minute) // 15
+        yday = today - timedelta(days=1)
+        if yday in self.counts:          # this run saw yesterday: counts kept live
+            prev = self.counts[yday]
+        else:                            # read once from the file; not saved again on close
+            if self._prev_day != yday:
+                self._prev_day, self._prev = yday, self._reload(yday)
+            prev = self._prev
+        both = np.concatenate([prev, self.day_counts(today)])
+        counts = both[b + 1:b + 1 + BINS_PER_DAY]
+        start = datetime(today.year, today.month, today.day, tzinfo=timezone.utc) \
+            + timedelta(minutes=15 * (b + 1)) - timedelta(days=1)
+        return counts, start
+
     def add(self, m):
         day = m.utc.date()
         if m.accepted:
@@ -78,7 +111,7 @@ class MeteorLog:
                "audio_hz": _fmt(m.audio_hz, 1), "peak_snr_db": _fmt(m.peak_snr_db, 1),
                "tau_ms": _fmt(m.tau_ms, 1),
                "rf_mhz": _fmt((self.dial_hz + m.audio_hz) / 1e6, 6),
-               "channel": self.channel, "peak_dbfs": _fmt(m.peak_dbfs, 1),
+               "channel": self.channel or "", "peak_dbfs": _fmt(m.peak_dbfs, 1),
                "noise_dbfs": _fmt(m.noise_dbfs, 1), "bin_snr_db": _fmt(m.bin_snr_db, 1),
                "plateau_ms": _fmt(m.plateau_ms, 0), "rise_ms": _fmt(m.rise_ms, 0),
                "duration_s": _fmt(m.duration_s, 3), "fit_r2": _fmt(m.r2, 3),
@@ -137,8 +170,8 @@ class MeteorLog:
         ax.set_xticks(range(0, 25, 2))
         ax.set_xlabel("UTC hour")
         ax.set_ylabel("Meteors per 15 minutes")
-        ax.set_title(f"Underdense meteors, {day:%Y-%m-%d} UTC, TV channel {self.channel} "
-                     f"({PILOT_MHZ[self.channel]:.3f} MHz): {int(counts.sum())} total")
+        ax.set_title(f"Underdense meteors, {day:%Y-%m-%d} UTC, "
+                     f"{signal_label(self.channel, self.dial_hz)}: {int(counts.sum())} total")
         ax.grid(axis="y", alpha=0.3)
         fig.savefig(self.dir / f"counts_{day:%Y%m%d}.png", dpi=120)
         plt.close(fig)

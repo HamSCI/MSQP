@@ -88,3 +88,33 @@ The first two entries are carried over from the AI usage log of `HamSCI/msqp.ham
   - Rerun with MIN_R2 = 0.3: 2,134 meteors (15-minute counts from 43 to 95, mean 67), still with only 4 off the station frequencies.
   - The recording is lossy (MP3), so faint-echo results may differ slightly from direct sound-card input.
 - **Git Hash**: e8ef218
+
+## [2026-11-12 07:58 CST]
+- **Tool**: Claude (Anthropic), claude-opus-5-5
+- **Session Purpose**: After a successful deployment at the NASA MSFC club station (about 4,000 meteors a day), Rob Suggs (NN4NT) asked for display and usability changes to `rt_meteor_counter` that leave detection unchanged, ahead of a second deployment at the von Braun Astronomical Society (VBAS) observatory and planetarium for public outreach.
+- **Sections/Files Affected**:
+  - `rt_meteor_counter/rt_meteor_counter/gui.py`:
+    - window settings saved and restored with QSettings;
+    - "Other frequency" signal choice;
+    - HamSCI logo in the lower left;
+    - count plot that slides to show the last 24 hours, with an option to label it in local time;
+    - "Last 24 hours" total.
+  - `output.py`:
+    - last-24-hour counts across the UTC day boundary;
+    - log and chart title for a typed frequency;
+    - file runs no longer write an empty counts file for the PC's date.
+  - `audio_out.py`: beep delayed 0.5 s; overlapping beeps add instead of replacing.
+  - `__main__.py`: `--mhz` option.
+  - `hamsci_logo.svg` (new): the white HamSCI wordmark from the hamsci.org banner.
+  - `README.md`: Signal, beep, count plot, saved settings and `--mhz`.
+- **Nature of Contribution**: Code generation and documentation.
+- **Human Review Status**: Partially reviewed. Rob reviewed the description of the changes and a screenshot of the window. Not yet run with real fonts and sound, or at a station.
+- **Verification**:
+  - Last-24-hour counts across midnight UTC, with yesterday read from its file: tested.
+  - Delayed and overlapping beeps: tested.
+  - Saved settings restored in a second window: tested.
+  - Tick labels in UTC and local time: tested.
+  - Window drawn off-screen: logo and layout checked.
+  - Command-line runs with `--channel 3` and `--mhz 143.05` on 3 minutes of MSFC audio gave identical detections (16 meteors), so detection is unchanged.
+  - The empty-counts-file fix: tested.
+- **Git Hash**: [fill in after committing]

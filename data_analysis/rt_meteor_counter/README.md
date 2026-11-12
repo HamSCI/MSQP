@@ -4,7 +4,8 @@ Counts underdense meteors in real time using forward scatter of the pilot carrie
 digital TV (ATSC) stations on VHF-low channels 2–6. For each meteor it logs the UTC time,
 audio frequency (which identifies the transmitter), peak amplitude and decay time. It
 shows a waterfall with a marker on each meteor, beeps at the meteor's frequency, and
-builds a chart of meteors per 15 minutes through the UTC day.
+builds a chart of meteors per 15 minutes over the last 24 hours. It can also watch a
+beacon or meteor radar carrier on any frequency you type in.
 
 It reads from an RTL-SDR, from any other receiver SoapySDR supports, or from a receiver's
 audio through the PC sound card. It runs on Windows, Linux and macOS with the
@@ -179,13 +180,18 @@ belongs in the audio. The `rf_mhz` column in the log is only as accurate as this
 ## Using it
 
 - **Input:** an SDR, a sound-card input, or a WAV recording (played in real time).
-- **TV channel:** one of channels 2–6. Choose based on where the stations lie relative to
-  you.
+- **Signal:** one of TV channels 2–6, chosen by where the stations lie relative to you, or
+  **Other frequency** for any carrier you type in MHz, such as a beacon or a CW meteor
+  radar. For a typed frequency the receiver is tuned 1 kHz below it in USB (an SDR is
+  tuned that way automatically; set an external receiver to the dial frequency shown),
+  so the carrier lands near 1000 Hz. The detector searches 500–1500 Hz around it. The
+  decay tests were tuned for 54–82 MHz, so check the first results on other bands.
 - **SDR gain:** fixed (the SDR's AGC is turned off). Raise it until the noise floor rises
   in the waterfall, but not so far that strong local signals overload.
 - **Audio output:** where to play the received audio, or (none). The speaker level is set
   automatically; this never alters the audio that's analysed. The beep plays at each
-  meteor's audio frequency.
+  meteor's audio frequency, 0.5 s after the meteor is detected, so you hear the echo
+  itself first.
 - **Threshold:** how many dB an echo must rise above its own bin's floor (default 10).
   Lower thresholds work down to 6 dB, but they let through many more noise flickers to
   check (about 2,000 a minute at 6 dB), so the processing load rises to about 15% of one
@@ -196,6 +202,14 @@ belongs in the audio. The `rf_mhz` column in the log is only as accurate as this
   - **Contrast:** the dB range from black to white.
 - **Markers:** cyan rings mark accepted meteors on the waterfall.
 - **Warm-up:** detection starts 15 s after Start, once each bin's floor has settled.
+- **Count plot:** meteors per 15 minutes over the last 24 hours, sliding so the right edge
+  is always now, to show the daily cycle. Yesterday's part comes from yesterday's meteors
+  file, so it survives a restart. Tick **Count plot in local time** to label the hours in
+  the PC's time zone, e.g. for visitors; the files stay in UTC.
+- **Saved settings:** everything in the window (input, signal, gains, audio, threshold,
+  sliders, output folder, window size) is saved when you close the program or press
+  Start, and restored at the next start. Devices are remembered by name. If one is
+  missing, choose again.
 
 ## Output files
 
@@ -230,7 +244,7 @@ Meteor columns:
 | `peak_snr_db` | peak power above the noise just before the echo, in the envelope filter |
 | `tau_ms` | amplitude e-folding time |
 | `rf_mhz` | dial frequency + audio frequency |
-| `channel` | TV channel |
+| `channel` | TV channel; blank for a typed frequency |
 | `peak_dbfs`, `noise_dbfs` | absolute levels; 0 dBFS is a full-scale sine |
 | `bin_snr_db` | peak in the FFT bin, above that bin's floor |
 | `plateau_ms`, `rise_ms`, `duration_s` | echo shape |
@@ -242,6 +256,9 @@ Meteor columns:
 ```
 python -m rt_meteor_counter --wav night.wav --start-utc 2026-12-14T03:00:00 --channel 3 --out results
 ```
+
+For another carrier, give its frequency instead of a channel, e.g. `--mhz 50.260`. Either
+one only labels the log; the recording is analysed the same way.
 
 This runs about 15 times faster than real time.
 

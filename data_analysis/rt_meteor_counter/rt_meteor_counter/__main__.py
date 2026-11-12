@@ -21,8 +21,11 @@ def run_file(args):
     start = parse_utc(args.start_utc) if args.start_utc else None
     source = WavSource(args.wav, realtime=False, start_utc=start)
     detector = MeteorDetector(threshold_db=args.threshold)
-    dial = PILOT_MHZ[args.channel] * 1e6 - AUDIO_OFFSET_HZ
-    log = MeteorLog(args.out, args.channel, dial)
+    if args.mhz:
+        channel, dial = None, args.mhz * 1e6 - AUDIO_OFFSET_HZ
+    else:
+        channel, dial = args.channel, PILOT_MHZ[args.channel] * 1e6 - AUDIO_OFFSET_HZ
+    log = MeteorLog(args.out, channel, dial, live=False)
     source.start()
     reasons = Counter()
     while True:
@@ -48,6 +51,9 @@ def main():
                                         "e.g. 2026-11-01T03:00:00 (default: now)")
     ap.add_argument("--channel", type=int, choices=sorted(PILOT_MHZ), default=2,
                     help="TV channel, for the log (default 2)")
+    ap.add_argument("--mhz", type=float,
+                    help="the carrier's frequency in MHz, for the log, instead of a TV channel "
+                         "(receiver tuned 1 kHz below it in USB)")
     ap.add_argument("--threshold", type=float, default=THRESHOLD_DB,
                     help=f"dB above each bin's floor (default {THRESHOLD_DB:g})")
     ap.add_argument("--out", type=Path, default=DEFAULT_OUT,
