@@ -117,4 +117,4 @@ The first two entries are carried over from the AI usage log of `HamSCI/msqp.ham
   - Window drawn off-screen: logo and layout checked.
   - Command-line runs with `--channel 3` and `--mhz 143.05` on 3 minutes of MSFC audio gave identical detections (16 meteors), so detection is unchanged.
   - The empty-counts-file fix: tested.
-- **Git Hash**: [fill in after committing]
+- **Git Hash**: 19d67c1
