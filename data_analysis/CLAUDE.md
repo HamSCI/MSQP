@@ -2,8 +2,9 @@
 
 Analysis code for the HamSCI Meteor Scatter QSO Party (MSQP) and related meteor
 scatter observations, inside the `HamSCI/MSQP` repository. The rest of that
-repository (papers, working group slides, research questions) belongs to the
-Meteor Scatter Working Group; change it only when asked.
+repository belongs to the Meteor Scatter Working Group; change it only when asked.
+The group's documents (papers, slides, research questions) have moved to a University
+of Scranton SharePoint site; the few still in the repository await deletion.
 
 **Maintainer of the current projects**: Rob Suggs, NN4NT, co-lead of the HamSCI Meteor
 Scatter Working Group.

@@ -136,3 +136,11 @@ The first two entries are carried over from the AI usage log of `HamSCI/msqp.ham
   - `--no-clips` appears in the command-line help.
   - Detection code unchanged.
 - **Git Hash**: 73aa111
+
+## [2026-11-16 14:57 CST]
+- **Tool**: Claude (Anthropic), claude-opus-5-5
+- **Session Purpose**: Record in the project instructions that the working group's documents moved from the repository to SharePoint.
+- **Sections/Files Affected**: `CLAUDE.md`, opening paragraph.
+- **Nature of Contribution**: Edit (wording supplied by Rob's description of the cleanup).
+- **Human Review Status**: Reviewed and verified. Rob asked for the change; the wording was shown before pushing.
+- **Git Hash**: [after commit]
