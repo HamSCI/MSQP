@@ -143,4 +143,4 @@ The first two entries are carried over from the AI usage log of `HamSCI/msqp.ham
 - **Sections/Files Affected**: `CLAUDE.md`, opening paragraph.
 - **Nature of Contribution**: Edit (wording supplied by Rob's description of the cleanup).
 - **Human Review Status**: Reviewed and verified. Rob asked for the change; the wording was shown before pushing.
-- **Git Hash**: [after commit]
+- **Git Hash**: dc41974
