@@ -25,7 +25,7 @@ def run_file(args):
         channel, dial = None, args.mhz * 1e6 - AUDIO_OFFSET_HZ
     else:
         channel, dial = args.channel, PILOT_MHZ[args.channel] * 1e6 - AUDIO_OFFSET_HZ
-    log = MeteorLog(args.out, channel, dial, live=False)
+    log = MeteorLog(args.out, channel, dial, live=False, save_clips=not args.no_clips)
     source.start()
     reasons = Counter()
     while True:
@@ -56,6 +56,8 @@ def main():
                          "(receiver tuned 1 kHz below it in USB)")
     ap.add_argument("--threshold", type=float, default=THRESHOLD_DB,
                     help=f"dB above each bin's floor (default {THRESHOLD_DB:g})")
+    ap.add_argument("--no-clips", action="store_true",
+                    help="don't save an audio clip of each echo")
     ap.add_argument("--out", type=Path, default=DEFAULT_OUT,
                     help=f"output folder (default {DEFAULT_OUT})")
     args = ap.parse_args()

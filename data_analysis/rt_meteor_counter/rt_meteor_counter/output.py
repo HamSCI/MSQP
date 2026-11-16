@@ -8,7 +8,8 @@ Files, one set per UTC day, in the output folder:
   counts_YYYYMMDD.png   the same as a bar chart; written once the day is over,
                         or when the program stops
   clips_YYYYMMDD/       audio of each logged echo, from CLIP_BEFORE_S before its
-                        peak (tools/plot_clip.py plots one)
+                        peak (tools/plot_clip.py plots one); optional, as they take
+                        about 140 kB each
 
 Counts already logged today are reloaded at start-up, so restarting the program
 during the day does not lose them.
@@ -48,13 +49,16 @@ def signal_label(channel, dial_hz):
 class MeteorLog:
     """channel is the TV channel number, or None when the receiver is tuned to a
     frequency typed in by the user; the CSV 'channel' column is then left blank.
+    save_clips=False writes no audio clips, to save disk space.
     live=False is for processing a recording: today's date on the PC clock is then
     unrelated to the data, so no (empty) counts file is made for it."""
 
-    def __init__(self, out_dir, channel, dial_hz, log_rejects=True, live=True):
+    def __init__(self, out_dir, channel, dial_hz, log_rejects=True, live=True,
+                 save_clips=True):
         self.dir = Path(out_dir)
         self.dir.mkdir(parents=True, exist_ok=True)
         self.channel, self.dial_hz, self.log_rejects = channel, dial_hz, log_rejects
+        self.save_clips = save_clips
         self.counts = {}
         self.saved = set()
         self._prev_day = self._prev = None   # yesterday's counts, for last_24h
@@ -129,7 +133,7 @@ class MeteorLog:
             if new:
                 w.writeheader()
             w.writerow(row)
-        if m.clip is not None:
+        if self.save_clips and m.clip is not None:
             clips = self.dir / f"clips_{day:%Y%m%d}"
             clips.mkdir(exist_ok=True)
             # 32-bit float keeps the weak signals' full resolution; 1.0 = full scale

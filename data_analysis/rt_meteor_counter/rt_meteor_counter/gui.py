@@ -24,6 +24,10 @@ N_ROWS = 600          # waterfall height in rows
 MARK_COLOR = "#00e5ff"
 LOGO = Path(__file__).with_name("hamsci_logo.svg")   # white wordmark from the hamsci.org banner
 LOGO_BG = "#212529"   # the banner's dark background, so the white logo shows
+# QR code for visitors (made once with the segno package; static, so no extra dependency).
+# Only one: two side by side were too close for a phone to pick between.
+QR_HAMSCI = Path(__file__).with_name("qr_hamsci.svg")   # https://hamsci.org
+QR_PX_PER_MODULE = 4  # whole pixels per QR module keep the code sharp for phone cameras
 OTHER = "other"       # signal combo entry for a frequency typed in
 
 pg.setConfigOptions(imageAxisOrder="row-major", antialias=True)
@@ -122,6 +126,11 @@ class MainWindow(QtWidgets.QMainWindow):
         f.addRow("Threshold", self.threshold)
         self.log_rejects = QtWidgets.QCheckBox("Log rejected echoes", checked=True)
         f.addRow(self.log_rejects)
+        self.save_clips = QtWidgets.QCheckBox("Save audio clips", checked=True)
+        self.save_clips.setToolTip("Save a short WAV of each logged meteor and reject "
+                                   "(about 140 kB each, so up to 1 GB a day at a busy site). "
+                                   "The CSV files and counts are kept either way.")
+        f.addRow(self.save_clips)
         self.out_edit = QtWidgets.QLineEdit(str(out_dir))
         browse = QtWidgets.QPushButton("...")
         browse.setMaximumWidth(30)
@@ -156,30 +165,80 @@ class MainWindow(QtWidgets.QMainWindow):
         v.addWidget(self._logo())
         self.run_widgets = [self.input_combo, refresh, self.channel_combo, self.freq_mhz,
                             self.gain, self.ppm, self.output_combo, self.log_rejects,
-                            self.out_edit, browse]
+                            self.save_clips, self.out_edit, browse]
         return box
 
     def _logo(self):
+        """The HamSCI logo with QR codes and web addresses below it, on the banner's dark
+        background, for visitors who want to know more."""
+        frame = QtWidgets.QFrame()
+        frame.setStyleSheet(f"QFrame {{ background: {LOGO_BG}; border-radius: 6px; }} "
+                            "QLabel { color: white; background: transparent; }")
+        v = QtWidgets.QVBoxLayout(frame)
+        v.setContentsMargins(12, 12, 12, 10)
         label = QtWidgets.QLabel()
         label.setAlignment(QtCore.Qt.AlignCenter)
-        label.setStyleSheet(f"background: {LOGO_BG}; border-radius: 6px; padding: 12px;")
         label.setToolTip("HamSCI, the Ham Radio Science Citizen Investigation: hamsci.org")
-        renderer = QtSvg.QSvgRenderer(str(LOGO))
-        if renderer.isValid():
-            ratio = self.devicePixelRatioF()
-            size = renderer.defaultSize().scaled(220, 1000, QtCore.Qt.KeepAspectRatio)
-            img = QtGui.QImage(size * ratio, QtGui.QImage.Format_ARGB32_Premultiplied)
-            img.fill(QtCore.Qt.transparent)
-            painter = QtGui.QPainter(img)
-            renderer.render(painter)
-            painter.end()
-            pix = QtGui.QPixmap.fromImage(img)
-            pix.setDevicePixelRatio(ratio)
+        pix = self._svg_pixmap(LOGO, 220)
+        if pix:
             label.setPixmap(pix)
         else:
-            label.setText('<span style="color:white; font-size:20pt; font-weight:bold">'
-                          'HamSCI</span>')
+            label.setText('<span style="font-size:20pt; font-weight:bold">HamSCI</span>')
+        v.addWidget(label)
+        row = QtWidgets.QHBoxLayout()
+        col = QtWidgets.QVBoxLayout()
+        qr = QtWidgets.QLabel()
+        qr.setAlignment(QtCore.Qt.AlignCenter)
+        qr.setToolTip("More about HamSCI: https://hamsci.org")
+        pix = self._svg_pixmap(QR_HAMSCI, modules=QR_PX_PER_MODULE)
+        if pix:
+            qr.setPixmap(pix)
+        col.addWidget(qr)
+        col.addWidget(self._link("https://hamsci.org", "hamsci.org"))
+        row.addLayout(col)
+        msqp = QtWidgets.QLabel("Ham Radio Meteor Scatter QSO Party")
+        msqp.setWordWrap(True)
+        msqp.setAlignment(QtCore.Qt.AlignCenter)
+        text = QtWidgets.QVBoxLayout()
+        text.addStretch(1)
+        text.addWidget(msqp)
+        text.addWidget(self._link("https://hamsci.org/msqp", "hamsci.org/msqp"))
+        text.addStretch(1)
+        row.addLayout(text, 1)
+        v.addLayout(row)
+        return frame
+
+    @staticmethod
+    def _link(url, text):
+        label = QtWidgets.QLabel(f'<a href="{url}" style="color:white; '
+                                 f'text-decoration:none">{text}</a>')
+        label.setOpenExternalLinks(True)
+        label.setAlignment(QtCore.Qt.AlignCenter)
+        label.setToolTip(url)
         return label
+
+    def _svg_pixmap(self, path, width=None, modules=None):
+        """Draw an SVG at this width in screen pixels, or, for a QR code, at a whole number
+        of pixels per module (one SVG unit), unsmoothed. None if the file can't be read."""
+        renderer = QtSvg.QSvgRenderer(str(path))
+        if not renderer.isValid():
+            return None
+        ratio = self.devicePixelRatioF()
+        if modules:
+            size = renderer.defaultSize() * modules
+            px = size * max(1, round(ratio))     # whole device pixels per module
+        else:
+            size = renderer.defaultSize().scaled(width, 1000, QtCore.Qt.KeepAspectRatio)
+            px = size * ratio
+        img = QtGui.QImage(px, QtGui.QImage.Format_ARGB32_Premultiplied)
+        img.fill(QtCore.Qt.transparent)
+        painter = QtGui.QPainter(img)
+        painter.setRenderHint(QtGui.QPainter.Antialiasing, not modules)
+        renderer.render(painter)
+        painter.end()
+        pix = QtGui.QPixmap.fromImage(img)
+        pix.setDevicePixelRatio(px.width() / size.width())
+        return pix
 
     def _signal(self):
         """(TV channel or None, dial frequency in Hz) for the chosen signal."""
@@ -291,7 +350,8 @@ class MainWindow(QtWidgets.QMainWindow):
             from .audio_out import AudioPlayer
             self.player = AudioPlayer(out_index)
             self._audio_settings()
-        self.log = MeteorLog(Path(self.out_edit.text()), ch, dial, self.log_rejects.isChecked())
+        self.log = MeteorLog(Path(self.out_edit.text()), ch, dial, self.log_rejects.isChecked(),
+                             save_clips=self.save_clips.isChecked())
         self.marks.clear()
         self.ref_db = None
         self._reset_waterfall()
@@ -377,7 +437,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def _check_widgets(self):
         return {"beep": self.beep, "log_rejects": self.log_rejects,
-                "local_time": self.local_time}
+                "save_clips": self.save_clips, "local_time": self.local_time}
 
     # ------------------------------------------------------------ waterfall
 

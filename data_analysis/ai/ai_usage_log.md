@@ -118,3 +118,21 @@ The first two entries are carried over from the AI usage log of `HamSCI/msqp.ham
   - Command-line runs with `--channel 3` and `--mhz 143.05` on 3 minutes of MSFC audio gave identical detections (16 meteors), so detection is unchanged.
   - The empty-counts-file fix: tested.
 - **Git Hash**: 19d67c1
+
+## [2026-11-16 14:48 CST]
+- **Tool**: Claude (Anthropic), claude-opus-5-5
+- **Session Purpose**: Review of the November MSFC channel 3 data (7–12 Nov 2026); outreach and disk-space changes to the RT meteor counter after the VBAS planetarium/observatory deployment.
+- **Sections/Files Affected**:
+  - `rt_meteor_counter/rt_meteor_counter/gui.py`: HamSCI panel gains a QR code and link for hamsci.org, with "Ham Radio Meteor Scatter QSO Party / hamsci.org/msqp" beside it; new "Save audio clips" checkbox (saved with the other settings).
+  - `rt_meteor_counter/rt_meteor_counter/qr_hamsci.svg` (new): static QR code for https://hamsci.org, made once with the segno package.
+  - `rt_meteor_counter/rt_meteor_counter/output.py`: `MeteorLog(save_clips=...)`.
+  - `rt_meteor_counter/rt_meteor_counter/__main__.py`: `--no-clips` option.
+  - `rt_meteor_counter/README.md`: the clip option, disk use (~140 kB per clip, ~1 GB/day at MSFC), the HamSCI panel, `--no-clips`.
+- **Nature of Contribution**: Analysis (MSFC data review: daily counts, diurnal profile, clustering and double-count tests, reject breakdown, sporadic-source altitudes vs. the 12 UTC dip), code generation and documentation.
+- **Human Review Status**: Partially reviewed. Rob scanned the QR codes from the screen with his phone and approved the layout. The north apex/sunrise interpretation of the 12 UTC dip is Rob's hypothesis, not yet tested; separating apex from sunrise needs data from other seasons.
+- **Verification**:
+  - The QR code on the rendered window matches the encoded URL module for module, and Rob's phone opened it.
+  - Clips written with the option on and none with it off: tested.
+  - `--no-clips` appears in the command-line help.
+  - Detection code unchanged.
+- **Git Hash**: [after commit]

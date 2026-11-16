@@ -206,6 +206,12 @@ belongs in the audio. The `rf_mhz` column in the log is only as accurate as this
   is always now, to show the daily cycle. Yesterday's part comes from yesterday's meteors
   file, so it survives a restart. Tick **Count plot in local time** to label the hours in
   the PC's time zone, e.g. for visitors; the files stay in UTC.
+- **Log rejected echoes / Save audio clips:** each clip is about 140 kB, so at a site
+  like MSFC (about 4,000 meteors and 3,000 rejects a day) the clips take about 1 GB a day.
+  Untick **Save audio clips** on a display or outreach PC; the CSV files and counts are
+  written either way.
+- **HamSCI panel:** below the logo, a QR code and link for hamsci.org, and beside it the
+  address of the Ham Radio Meteor Scatter QSO Party (hamsci.org/msqp), for visitors.
 - **Saved settings:** everything in the window (input, signal, gains, audio, threshold,
   sliders, output folder, window size) is saved when you close the program or press
   Start, and restored at the next start. Devices are remembered by name. If one is
@@ -222,7 +228,7 @@ UTC day:
 | `rejects_YYYYMMDD.csv` | echoes that failed a test, with the reason. Noise flickers that fail the integrated-SNR test aren't written. |
 | `counts_YYYYMMDD.csv` | meteors per 15-minute bin |
 | `counts_YYYYMMDD.png` | the 15-minute chart. Saved once the UTC day has ended, or when you press Stop or close the program. |
-| `clips_YYYYMMDD/` | audio of every logged meteor and reject (not impulse noise), from 2 s before the peak to 2.5 s after, as 32-bit float WAV, e.g. `184313.244_1065Hz_reject.wav` |
+| `clips_YYYYMMDD/` | if **Save audio clips** is ticked: audio of every logged meteor and reject (not impulse noise), from 2 s before the peak to 2.5 s after, as 32-bit float WAV, e.g. `184313.244_1065Hz_reject.wav` |
 
 To see why an echo was accepted or rejected, plot its clip:
 
@@ -258,7 +264,8 @@ python -m rt_meteor_counter --wav night.wav --start-utc 2026-12-14T03:00:00 --ch
 ```
 
 For another carrier, give its frequency instead of a channel, e.g. `--mhz 50.260`. Either
-one only labels the log; the recording is analysed the same way.
+one only labels the log; the recording is analysed the same way. Add `--no-clips` to
+skip saving an audio clip of each echo.
 
 This runs about 15 times faster than real time.
 
