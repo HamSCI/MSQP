@@ -135,4 +135,4 @@ The first two entries are carried over from the AI usage log of `HamSCI/msqp.ham
   - Clips written with the option on and none with it off: tested.
   - `--no-clips` appears in the command-line help.
   - Detection code unchanged.
-- **Git Hash**: [after commit]
+- **Git Hash**: 73aa111
