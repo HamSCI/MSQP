@@ -142,5 +142,5 @@ The first two entries are carried over from the AI usage log of `HamSCI/msqp.ham
 - **Session Purpose**: Record in the project instructions that the working group's documents moved from the repository to SharePoint.
 - **Sections/Files Affected**: `CLAUDE.md`, opening paragraph.
 - **Nature of Contribution**: Edit (wording supplied by Rob's description of the cleanup).
-- **Human Review Status**: Reviewed and verified. Rob asked for the change; the wording was shown before pushing.
+- **Human Review Status**: Pending review. Rob asked for the change; the wording was pushed before he saw it.
 - **Git Hash**: dc41974
